@@ -1,6 +1,6 @@
 import os.path
 import unittest
-from datetime import datetime, date
+from datetime import date, datetime
 
 from base.errors import ProgramError
 from datasource.csv_datasource import CSVDatasource

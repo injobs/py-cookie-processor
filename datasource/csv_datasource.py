@@ -1,5 +1,5 @@
 import csv
-from datetime import datetime, date
+from datetime import date, datetime
 from typing import Generator
 
 from base.datasource import AbstractDatasource
