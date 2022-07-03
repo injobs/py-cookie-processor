@@ -1,7 +1,7 @@
 import argparse
 
-from datasource import CSVDatasource
-from lib import CookieProcessor
+from datasource.csv_datasource import CSVDatasource
+from lib.cookie_processor import CookieProcessor
 from lib.output_util import OutputUtil
 
 parser = argparse.ArgumentParser()

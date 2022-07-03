@@ -4,8 +4,8 @@ import unittest
 from datetime import date
 
 from base.errors import ProgramError
-from datasource import CSVDatasource
-from lib import CookieProcessor
+from datasource.csv_datasource import CSVDatasource
+from lib.cookie_processor import CookieProcessor
 
 
 class TestCookieProcessor(unittest.TestCase):
