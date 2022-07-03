@@ -1,6 +1,6 @@
 import os.path
 import unittest
-from datetime import datetime
+from datetime import datetime, date
 
 from base.errors import ProgramError
 from datasource.csv_datasource import CSVDatasource
@@ -36,6 +36,14 @@ class TestCSVDatasource(unittest.TestCase):
 
     def test_valid_cookie_validation(self):
         self.assertEqual(CSVDatasource._validate_cookie('random '), 'random')
+
+    def test_get_rows_for_date(self):
+        csv_ds = CSVDatasource(self.fixture_path + '/sample.csv')
+        rows = csv_ds.get_rows_for_date(date(2018, 12, 9))
+
+        expected_rows = ['AtY0laUfhglK3lC7', 'SAZuXPGUrfbcn5UA', '5UAVanZf6UtGyKVS', 'AtY0laUfhglK3lC7']
+
+        self.assertListEqual([row['cookie'] for row in rows], expected_rows)
 
     def test_valid_file(self):
         """ Ensures it doesn't raise any error upon valid file """

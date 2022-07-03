@@ -20,14 +20,6 @@ class TestCookieProcessor(unittest.TestCase):
     def test_error_on_datasource(self):
         self.assertRaises(ProgramError, CookieProcessor, CSVDatasource(''))
 
-    def test_collect_row(self):
-        csv_ds = CSVDatasource(self.fixture_file)
-        rows = list(CookieProcessor._collect_rows_for_date(csv_ds.get_rows(), date(2018, 12, 9)))
-
-        expected_rows = ['AtY0laUfhglK3lC7', 'SAZuXPGUrfbcn5UA', '5UAVanZf6UtGyKVS', 'AtY0laUfhglK3lC7']
-
-        self.assertListEqual([row['cookie'] for row in rows], expected_rows)
-
     def test_aggregate_cookie(self):
         cookies = [{'cookie': 'xyz', 'timestamp': datetime.datetime(2018, 1, 1, 5)},
                    {'cookie': 'xyz', 'timestamp': datetime.datetime(2018, 1, 1, 6)},
@@ -51,7 +43,7 @@ class TestCookieProcessor(unittest.TestCase):
 
     def test_find_most_freq_cookies(self):
         csv_ds = CSVDatasource(self.fixture_file)
-        rows = list(CookieProcessor._collect_rows_for_date(csv_ds.get_rows(), date(2018, 12, 9)))
+        rows = csv_ds.get_rows_for_date(date(2018, 12, 9))
         count_dict = CookieProcessor._aggr_cookie(rows)
 
         self.assertEqual(CookieProcessor._find_most_freq_cookies(count_dict), {'AtY0laUfhglK3lC7'})

@@ -24,24 +24,10 @@ class CookieProcessor:
         :return:
         """
         dt = self._parse_date_str(day)
-        rows = self._collect_rows_for_date(self._ds.get_rows(), dt)
+        rows = self._ds.get_rows_for_date(dt)
         count_dict = self._aggr_cookie(rows)
 
         return self._find_most_freq_cookies(count_dict)
-
-    @staticmethod
-    def _collect_rows_for_date(rows: Iterable[dict], dt: date):
-        for row in rows:
-            date_ = row['timestamp'].date()
-
-            if date_ > dt:
-                continue
-
-            if date_ < dt:
-                # Since the records are sorted by datetime, we don't need data below the given date.
-                break
-
-            yield row
 
     @staticmethod
     def _aggr_cookie(rows: Iterable[dict]) -> dict:

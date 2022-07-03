@@ -1,5 +1,5 @@
 import csv
-from datetime import datetime
+from datetime import datetime, date
 from typing import Generator
 
 from base.datasource import AbstractDatasource
@@ -62,6 +62,25 @@ class CSVDatasource(AbstractDatasource):
                         continue
                     else:
                         raise
+
+    def get_rows_for_date(self, dt: date) -> Generator[dict, None, None]:
+        """
+        Get rows for given date
+
+        :param dt:
+        :return:
+        """
+        for row in self.get_rows():
+            date_ = row['timestamp'].date()
+
+            if date_ > dt:
+                continue
+
+            if date_ < dt:
+                # Since the records are sorted by datetime, we don't need data below the given date.
+                break
+
+            yield row
 
     @classmethod
     def _validate_row(cls, row: dict) -> dict:
